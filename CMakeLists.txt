@@ -12,4 +12,8 @@ if(GTest_FOUND)
     gtest_add_tests(TARGET board_test)
 endif()
 
-add_executable(Relbatross src/main.cpp src/board/board.h src/board/board.cpp src/uci/uci_interaction.h src/uci/uci_interaction.cpp)
+add_library(board STATIC src/board/board.h src/board/board.cpp)
+add_library(uci STATIC src/uci/uci_interaction.h src/uci/uci_interaction.cpp)
+
+add_executable(Relbatross src/main.cpp)
+target_link_libraries(Relbatross lib_board lib_uci)
