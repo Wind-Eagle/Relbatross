@@ -12,8 +12,11 @@ if(GTest_FOUND)
     gtest_add_tests(TARGET board_test)
 endif()
 
+add_library(basic STATIC src/basic/types.h src/basic/utils.h src/basic/hash.cpp src/basic/hash.h src/basic/init.h src/basic/init.cpp)
 add_library(board STATIC src/board/board.h src/board/board.cpp)
-add_library(uci STATIC src/uci/uci_interaction.h src/uci/uci_interaction.cpp)
+target_link_libraries(board basic)
+add_library(api STATIC src/api/uci_interaction.h src/api/uci_interaction.cpp)
+target_link_libraries(api basic board)
 
 add_executable(Relbatross src/main.cpp)
-target_link_libraries(Relbatross lib_board lib_uci)
+target_link_libraries(Relbatross board api basic)
